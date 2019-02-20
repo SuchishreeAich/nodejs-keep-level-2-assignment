@@ -1,11 +1,13 @@
-const should = require('chai').should();
 const request = require('supertest');
 const app = require('../app');
 const config = require('./test.config');
+const expect = require('chai').expect;
 
-const USER_ID_1 = ''; // userID should be same which is used to generate the token 
-const USER_ID_2 = ''; // userID should be same which is used to generate the token
-
+const USER_ID_1 = config.USER_ID_1; // userID should be same which is used to generate the token 
+const USER_ID_2 = config.USER_ID_2; // userID should be same which is used to generate the token
+const USER_ID_3 = config.USER_ID_3;
+let NOTE_ID = '';
+let token = 'abc123';
 //  testsuite
 describe('Testing to add a note', function()
 {
@@ -16,7 +18,18 @@ describe('Testing to add a note', function()
     // status = 201
     // response will be added note object
     // Pass valid token in Authorization header as Bearer
-    done();
+    request(app)
+    .post(`/api/v1/notes/?userId=${USER_ID_1}`)
+    .send(config.NOTE_1)
+    .set('Authorization' , 'Bearer '+ token)
+    .expect(201)
+    .then((response) => {
+      NOTE_ID = response.body.id;
+
+      expect(response.body.title).to.equal(config.NOTE_1.title);
+      expect(response.body.text).to.equal(config.NOTE_1.text);
+      done();
+    });
   });
 
   //  testcase
@@ -26,7 +39,17 @@ describe('Testing to add a note', function()
     // status = 201
     // response will be added note object
     // Pass valid token in Authorization header as Bearer
-    done();
+    request(app)
+    .post(`/api/v1/notes/?userId=${USER_ID_2}`)
+    .send(config.NOTE_2)
+    .set('Authorization' , 'Bearer '+token)
+    .expect(201)
+    .then((response) => {
+
+      expect(response.body.title).to.equal(config.NOTE_2.title);
+      expect(response.body.text).to.equal(config.NOTE_2.text);
+      done();
+    });
   });
 });
 
@@ -40,7 +63,16 @@ describe('Testing to get all notes', function()
     // status = 200
     // response will be a array or all notes those are added by user 1
     // Pass valid token in Authorization header as Bearer
-    done();
+    request(app)
+    .get(`/api/v1/notes/?userId=${USER_ID_1}`)
+    .set('Authorization', 'Bearer '+token)
+    .expect(200)
+    .then((response) => {
+      expect(response.body).to.be.an('array');
+      expect(response.body[0].title).to.equal(config.NOTE_1.title);
+      expect(response.body[0].text).to.equal(config.NOTE_1.text);
+      done();
+    });
   });
 
   //  testcase
@@ -50,7 +82,18 @@ describe('Testing to get all notes', function()
     // status = 200
     // response will be a array or all notes those are added by user 2
     // Pass valid token in Authorization header as Bearer
-    done();
+    request(app)
+    .get(`/api/v1/notes/?userId=${USER_ID_2}`)
+    .set('Authorization','Bearer '+token)
+    .expect(200)
+    .then((response) => {
+      expect(response.body).to.be.an('array');
+      expect(response.body[0].title).to.equal(config.NOTE_2.title);
+      expect(response.body[0].text).to.equal(config.NOTE_2.text);
+      done();
+    }).catch((error) => {
+      done(error);
+    });
 
   });
 
@@ -61,7 +104,17 @@ describe('Testing to get all notes', function()
     // status = 200
     // response will be an empty array
     // Pass valid token in Authorization header as Bearer
-    done();
+    request(app)
+    .get(`/api/v1/notes/?userId=${USER_ID_3}`)
+    .set('Authorization', 'Bearer '+token)
+    .expect(200)
+    .then((response) => {
+      expect(response.body).to.be.an('array');
+      expect(response.body.length).to.equal(0);
+      done();
+    }).catch((error) => {
+      done(error);
+    });
   });
 });
 
@@ -75,7 +128,18 @@ describe('Testing to update a note', function()
     // status = 200
     // response will hold updated note as an object
     // Pass valid token in Authorization header as Bearer
-    done();
+    const newText = 'newText for note 1';
+    config.NOTE_1.text = newText;
+    request(app)
+    .put(`/api/v1/notes/${NOTE_ID}`)
+    .set('Authorization','Bearer '+token)
+    .send(config.NOTE_1)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.title).to.equal(config.NOTE_1.title);
+      expect(response.body.text).to.equal(newText);
+      done();
+    });
   });
 });
 
