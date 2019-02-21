@@ -25,10 +25,11 @@ const isAuthenticatedUser = (req, res, next) => {
                     res.status(403).send('Expired Token');
                 }
                 else if(err.message.includes('invalid')){
-                    res.status(403).send('invalid token');
+
+                    res.status(403).send({message : 'invalid token'});
                 }
                 else{
-                    res.status(403).send(err.message);
+                    res.status(403).send({message : err.message});
                 }               
             } 
             else {
