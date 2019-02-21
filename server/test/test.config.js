@@ -1,5 +1,7 @@
 //  Test Configuration Object
 const uuidv1 = require('uuid/v1');
+const jwt = require('jsonwebtoken');
+const {authConfig} = require('../config/appConfig');
 
 const USER_ID_1 = uuidv1();
 const USER_ID_2 = uuidv1();
@@ -32,6 +34,12 @@ const USER_3={
     password: USER_ID_3
 };
 
+const payload_USER_1 = {
+    userId : USER_ID_1,
+    userName : USER_ID_1
+}
+
+const token_USER_1 = jwt.sign(payload_USER_1,authConfig.jwtSecret);
 
 module.exports = {
     USER_ID_1,
@@ -41,6 +49,7 @@ module.exports = {
     NOTE_2,
     USER_1,
     USER_2,
-    USER_3
+    USER_3,
+    token_USER_1
 }
 

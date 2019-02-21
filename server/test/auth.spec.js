@@ -23,13 +23,13 @@ describe('JWT Token test scenarios', function() {
 		done() 
 	});
 	it('verification of a valid signed token, must return same payload, which was passed', function(done) {
-	 done() 
+		done()
 	});
 	it('verification a expired token, must return with appropriate error', function(done) {
 		done() 
 	});
 	it('verification a invalid, must return with appropriate error', function(done) {
-	 done() 
+		done() 
 	});
 
 });

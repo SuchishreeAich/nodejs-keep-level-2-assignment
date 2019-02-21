@@ -7,7 +7,7 @@ const USER_ID_1 = config.USER_ID_1; // userID should be same which is used to ge
 const USER_ID_2 = config.USER_ID_2; // userID should be same which is used to generate the token
 const USER_ID_3 = config.USER_ID_3;
 let NOTE_ID = '';
-let token = 'abc123';
+let token = config.token_USER_1;
 //  testsuite
 describe('Testing to add a note', function()
 {
