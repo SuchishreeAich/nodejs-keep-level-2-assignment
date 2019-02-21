@@ -11,7 +11,9 @@ const verifyToken = (token, secret, callback) => {
 
     jwt.verify(token, secret, (error, decoded) => {
         let errMsg;
-        if(error) {
+        //console.log('verify 1', error);
+        //console.log('verify 2', decoded);
+        if(error && !decoded) {
             //res.status(403).send('invalid token');
             errMsg = 'invalid token';
         } 
@@ -45,8 +47,8 @@ const isAuthenticatedUser = (req, res, next) => {
                     res.status(403).send(err);
                 }          
             } 
-            else {
-                req.userId = decoded.userId;
+            else if(decoded) {
+                //req.userId = decoded.userId;
                 next();
             }
         });
