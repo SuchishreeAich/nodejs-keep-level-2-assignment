@@ -10,11 +10,14 @@ const verifyToken = (token, secret, callback) => {
     //jwt.verify(token, secret, callback);
 
     jwt.verify(token, secret, (error, decoded) => {
+        let errMsg;
         if(error) {
-            res.status(403).send('invalid token');
-        } else {
-            callback(error, decoded);
-        }
+            //res.status(403).send('invalid token');
+            errMsg = 'invalid token';
+        } 
+            
+        callback(errMsg, decoded);
+        
     });
 }
 
@@ -36,9 +39,11 @@ const isAuthenticatedUser = (req, res, next) => {
 
                     res.status(403).send('invalid token');
                 }
-                else{
+                else if(err.message){
                     res.status(403).send(err.message);
-                }               
+                } else {
+                    res.status(403).send(err);
+                }          
             } 
             else {
                 req.userId = decoded.userId;
