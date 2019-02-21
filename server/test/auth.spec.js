@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
 const { signJWTToken, verifyJWTToken } = require('../modules');
-const {authConfig} = require('../config/appConfig');
-const config = require('./test.config');
-const jwt = require('jsonwebtoken');
+//const {authConfig} = require('../config/appConfig');
+//const config = require('./test.config');
+//const jwt = require('jsonwebtoken');
 
 describe('JWT Token test scenarios', function() {
 	before(function(done) { done(); });

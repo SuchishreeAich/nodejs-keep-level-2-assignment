@@ -24,10 +24,12 @@ const isAuthenticatedUser = (req, res, next) => {
                 if(err.name === 'TokenExpiredError'){
                     res.status(403).send('Expired Token');
                 }
-                else if(err.name === 'InvalidToken'){
+                else if(err.message.includes('invalid')){
                     res.status(403).send('invalid token');
                 }
-                res.status(403).send(err.message);
+                else{
+                    res.status(403).send(err.message);
+                }               
             } 
             else {
                 req.userId = decoded.userId;
