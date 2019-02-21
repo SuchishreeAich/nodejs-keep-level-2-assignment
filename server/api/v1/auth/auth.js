@@ -15,15 +15,7 @@ const verifyToken = (token, secret, callback) => {
         //console.log('verify 2', decoded);
         if(error && !decoded) {
             //res.status(403).send('invalid token');            
-            if(error.message.includes('invalid')){
-                errMsg = 'invalid token';
-            }
-            else if(error.name === 'TokenExpiredError'){
-                errMsg = 'Expired Token';
-            }
-            else{
-                errMsg = error.message;
-            }
+            errMsg = 'invalid token';
         } 
             
         callback(errMsg, decoded);
