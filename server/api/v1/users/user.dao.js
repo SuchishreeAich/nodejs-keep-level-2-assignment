@@ -16,7 +16,7 @@ const loginUser = (userInfo) => {
                 reject({message : 'You are not registered user',status : 403});
             }
             else if(data.password !== userInfo.password){
-                reject({message : 'Password is incorrect',status : 403});
+                reject({message : 'Passwords is incorrect',status : 403});
             }
             else{
                 let payload = {userId : data.userId,userName : data.username};

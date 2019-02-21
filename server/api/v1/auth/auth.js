@@ -21,6 +21,12 @@ const isAuthenticatedUser = (req, res, next) => {
         verifyToken(token,authConfig.jwtSecret, (err, decoded) => {
             if(err) 
             {
+                if(err.name === 'TokenExpiredError'){
+                    res.status(403).send('Expired Token');
+                }
+                else if(err.name === 'InvalidToken'){
+                    res.status(403).send('invalid token');
+                }
                 res.status(403).send(err.message);
             } 
             else {

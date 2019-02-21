@@ -77,7 +77,7 @@ describe('Testing to login user', function()
    .expect(403)
    .then((response)=>{
      expect(response.body).to.have.property('message');
-     expect(response.body.message).to.equal('Password is incorrect');
+     expect(response.body.message).to.equal('Passwords is incorrect');
      done();
   });
 });

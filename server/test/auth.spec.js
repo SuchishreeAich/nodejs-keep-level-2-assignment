@@ -1,5 +1,8 @@
 const expect = require('chai').expect;
 const { signJWTToken, verifyJWTToken } = require('../modules');
+const {authConfig} = require('../config/appConfig');
+const config = require('./test.config');
+const jwt = require('jsonwebtoken');
 
 describe('JWT Token test scenarios', function() {
 	before(function(done) { done(); });
@@ -20,7 +23,17 @@ describe('JWT Token test scenarios', function() {
 	});
 
 	it('sign a token with valid payload, signature, secret and expiry time', function(done) { 
-		done() 
+		
+		// signJWTToken = (config.payload_USER_1,authConfig.jwtSecret,'10h',(error,token)=>{
+		// 	expect(token).not.to.be.undefined;
+		// 	done();
+		// });
+		// jwt.sign(config.payload_USER_1,authConfig.jwtSecret,'10h',(error,token) =>{
+		// 	//expect(error).to.be.undefined;
+		// 	expect(token).not.to.be.undefined;
+		// 	done();
+		// });
+		done()		 
 	});
 	it('verification of a valid signed token, must return same payload, which was passed', function(done) {
 		done()

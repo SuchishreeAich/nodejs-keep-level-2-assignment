@@ -50,6 +50,7 @@ module.exports = {
     USER_1,
     USER_2,
     USER_3,
-    token_USER_1
+    token_USER_1,
+    payload_USER_1
 }
 
