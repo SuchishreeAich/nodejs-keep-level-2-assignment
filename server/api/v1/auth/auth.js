@@ -14,8 +14,16 @@ const verifyToken = (token, secret, callback) => {
         //console.log('verify 1', error);
         //console.log('verify 2', decoded);
         if(error && !decoded) {
-            //res.status(403).send('invalid token');
-            errMsg = 'invalid token';
+            //res.status(403).send('invalid token');            
+            if(error.message.includes('invalid')){
+                errMsg = 'invalid token';
+            }
+            else if(error.name === 'TokenExpiredError'){
+                errMsg = 'Expired Token';
+            }
+            else{
+                errMsg = error.message;
+            }
         } 
             
         callback(errMsg, decoded);
