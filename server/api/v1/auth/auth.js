@@ -7,7 +7,15 @@ const signToken = (payload, secret, expireIn, callback) => {
 }
 
 const verifyToken = (token, secret, callback) => {
-    jwt.verify(token, secret, callback);
+    //jwt.verify(token, secret, callback);
+
+    jwt.verify(token, secret, (error, decoded) => {
+        if(error) {
+            res.status(403).send('invalid token');
+        } else {
+            callback(error, decoded);
+        }
+    });
 }
 
 const isAuthenticatedUser = (req, res, next) => {
@@ -26,10 +34,10 @@ const isAuthenticatedUser = (req, res, next) => {
                 }
                 else if(err.message.includes('invalid')){
 
-                    res.status(403).send({message : 'invalid token'});
+                    res.status(403).send('invalid token');
                 }
                 else{
-                    res.status(403).send({message : err.message});
+                    res.status(403).send(err.message);
                 }               
             } 
             else {
