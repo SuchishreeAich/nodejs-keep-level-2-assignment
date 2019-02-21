@@ -21,7 +21,7 @@ const loginUser = (userInfo) => {
             else{
                 let payload = {userId : data.userId,userName : data.username};
 
-                auth.signToken(payload,authConfig.jwtSecret,'5',(error,generatedToken) => {
+                auth.signToken(payload,authConfig.jwtSecret,'10h',(error,generatedToken) => {
 
                     if(error){
                         reject({message : 'Passwords is incorrect',status : 403});
